@@ -65,11 +65,11 @@
         }
         var api = new JitsiMeetExternalAPI(domain, options);
 
-        var p = '*FK8e@n.Y9r5';
+        var pass = 'thXb5[s#]88B';
         api.addEventListener('participantRoleChanged', function(event) {
             // when host has joined the video conference 
             if (event.role == 'moderator') {
-                api.executeCommand('password', p);
+                api.executeCommand('password', pass);
             }
             else {
                 setTimeout(() => {
@@ -77,12 +77,12 @@
 
                     // when local user is trying to enter in a locked room 
                     api.addEventListener('passwordRequired', () => {
-                        api.executeCommand('password', p);
+                        api.executeCommand('password', pass);
                     });
 
                     // when local user has joined the video conference 
                     api.addEventListener('videoConferenceJoined', (response) => {
-                        setTimeout(function(){ api.executeCommand('password', p);}, 300);
+                        setTimeout(function(){ api.executeCommand('password', pass);}, 300);
                     });
 
                 }, 10);

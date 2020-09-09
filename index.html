@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+ ________  _______   ________  ________  ________   _______
+|\   __  \|\  ___ \ |\   ____\|\   __  \|\   ___  \|\  ___ \
+\ \  \|\ /\ \   __/|\ \  \___|\ \  \|\  \ \  \\ \  \ \   __/|
+ \ \   __  \ \  \_|/_\ \  \  __\ \  \\\  \ \  \\ \  \ \  \_|/__
+  \ \  \|\  \ \  \_|\ \ \  \|\  \ \  \\\  \ \  \\ \  \ \  \_|\ \
+   \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\
+    \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|
+
+
+
+ ________  _________  ___  ___  ________  _______   ________   _________
+|\   ____\|\___   ___\\  \|\  \|\   ___ \|\  ___ \ |\   ___  \|\___   ___\
+\ \  \___|\|___ \  \_\ \  \\\  \ \  \_|\ \ \   __/|\ \  \\ \  \|___ \  \_|
+ \ \_____  \   \ \  \ \ \  \\\  \ \  \ \\ \ \  \_|/_\ \  \\ \  \   \ \  \
+  \|____|\  \   \ \  \ \ \  \\\  \ \  \_\\ \ \  \_|\ \ \  \\ \  \   \ \  \
+    ____\_\  \   \ \__\ \ \_______\ \_______\ \_______\ \__\\ \__\   \ \__\
+   |\_________\   \|__|  \|_______|\|_______|\|_______|\|__| \|__|    \|__|
+   \|_________|
+
+
+ -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Teachers Conference | Dhahampasala Web Conferencing</title>
+    <meta property="og:title" content="Teachers Conference | Dhahampasala Web Conferencing"/>
+    <meta property="og:image" content="http://www.dhahampasala.org/wp-content/themes/belief/fb_screenshot.png"/>
+    <meta property="og:description" content="Dhahampasala Web Conferencing"/>
+    <meta description="Teachers Private Conference Room"/>
+    <meta itemprop="description" content="Teachers Private Conference Room"/>
+    <meta itemprop="image" content="http://www.dhahampasala.org/wp-content/themes/belief/fb_screenshot.png"/>
+    <link rel="icon" type="image/png" href="https://dhahampasala-webconference.thisas.dev/Teachers-Meeting/favicon.png"/>
+    <link href="css/bootstrap-dark.min.css" rel="stylesheet" type="text/css" />
+    <script src ="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  </head>
+  <body>
+    <script src="https://meet.jit.si/external_api.js"></script>
+    <script>
+        var domain = "meet.jit.si";
+        var options = {
+            roomName: "TJQtFRXi3Dsd",
+            width: window.innerWidth,
+            height: window.innerHeight,
+            parentNode: undefined,
+            configOverwrite: {
+              subject: "Teachers Private Conference Room",
+              disableInviteFunctions: true,
+              disableDeepLinking: true
+
+
+            },
+            interfaceConfigOverwrite: {
+                filmStripOnly: false,
+                BRAND_WATERMARK_LINK: 'http://www.dhahampasala.org/wp-content/uploads/2015/11/logo-2.png',
+                DEFAULT_LOGO_URL: 'http://www.dhahampasala.org/wp-content/uploads/2015/11/logo-2.png',
+                SHOW_CHROME_EXTENSION_BANNER: false,
+                SHOW_BRAND_WATERMARK: false,
+                HIDE_INVITE_MORE_HEADER: true,
+                MOBILE_APP_PROMO: false
+            }
+        }
+        var api = new JitsiMeetExternalAPI(domain, options);
+
+        var p = '*FK8e@n.Y9r5';
+        api.addEventListener('participantRoleChanged', function(event) {
+            // when host has joined the video conference 
+            if (event.role == 'moderator') {
+                api.executeCommand('password', p);
+            }
+            else {
+                setTimeout(() => {
+                // why timeout: I got some trouble calling event listeners without setting a timeout :)
+
+                    // when local user is trying to enter in a locked room 
+                    api.addEventListener('passwordRequired', () => {
+                        api.executeCommand('password', p);
+                    });
+
+                    // when local user has joined the video conference 
+                    api.addEventListener('videoConferenceJoined', (response) => {
+                        setTimeout(function(){ api.executeCommand('password', p);}, 300);
+                    });
+
+                }, 10);
+            }
+        });
+
+
+    </script>
+</body>
+</html>
